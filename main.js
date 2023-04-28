@@ -2,7 +2,7 @@ let nombre = prompt(`Bienvenido al cotizador de cuadros\nPor favor, ingrese su n
 alert(`${nombre}, para realizar una cotizacion vamos\na solicitarte dos medidas en centímetros.`)
 
 // Calcular m2
-const m2 = (a, b) => (a * b) / 100;
+const m2 = (a, b) => (a * b) / 10000;
 
 // Costos de materiales
 const m2Lienzo = 100;
@@ -35,7 +35,7 @@ while (isNaN(opcionCompra)) {
 }
 
 switch (opcionCompra) {
-  case value: 1
+  case 1:
     alert(`El material seleccionado es Lienzo
     Puede realizar el pago de las siguientes maneras.
     Contado $${costoLienzo}
@@ -45,7 +45,7 @@ switch (opcionCompra) {
     Con esta información comunicarse con un operador.`)
     break;
 
-  case value: 2
+  case 2:
     alert(`El material seleccionado es Vidrio
     Puede realizar el pago de las siguientes maneras.
     Contado $${costoVidrio}
@@ -55,13 +55,13 @@ switch (opcionCompra) {
     Con esta información comunicarse con un operador.`)
     break;
 
-  case value: 3
+  case 3:
     alert(`El material seleccionado es Aluminio
     Puede realizar el pago de las siguientes maneras.
-    Contado $${costoVidrio}
-    3 Cuotas $${costoVidrio / 3}
-    6 Cuotas $${(costoVidrio / 6) * 0.5}
-    12 Cuotas $${(costoVidrio / 12) * 0.1}
+    Contado $${costoAluminio}
+    3 Cuotas $${costoAluminio / 3}
+    6 Cuotas $${(costoAluminio / 6) * 0.5}
+    12 Cuotas $${(costoAluminio / 12) * 0.1}
     Con esta información comunicarse con un operador.`)
     break;
   default:
