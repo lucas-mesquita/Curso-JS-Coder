@@ -1,26 +1,22 @@
 // Obtener el botón de ingresoCuadro
 let btnIngresoCuadro = document.getElementById("ingresoCuadro");
-
 // Agregar evento de click al botón
 btnIngresoCuadro.addEventListener("click", (e) => {
-
   // Crear el formulario de ingreso llamando la funcion
   crearFormIngreso();
 });
 
 // Obtener el botón de Ver Cuadros
 let btnVerCuadro = document.getElementById("verCuadro");
-
 // Agregar evento de click al botón
 btnVerCuadro.addEventListener("click", (e) => {
-
   // Crear el formulario de ingreso llamando la funcion
   verCuadros();
 });
 
 
 
-// Ingresar Cuadro
+/* // Ingresar Cuadro
 if (eleccion === 1) {
   // Ingresar a stock
   let cuadroIngresado = false;
@@ -83,7 +79,7 @@ if (eleccion === 1) {
       } else {
         alert("El precio ingresado no es válido. Por favor, ingrese un valor numérico mayor que cero.");
       }
-    }
+    } 
 
     let stockValido = false;
     while (!stockValido) {
@@ -149,3 +145,4 @@ Por favor, ingrese un número correspondiente a uno de los materiales.`));
   }
 }
 
+ */

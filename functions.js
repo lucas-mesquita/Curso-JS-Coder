@@ -29,9 +29,7 @@ const validarString = (valor) => {
 const validarNumero = (valor) => {
     return !isNaN(valor) && typeof valor === 'number' && isFinite(valor);
 };
-///////////////////////////////////////////////////////////////////
-
-// Funcion para crear Formulario ingreso de cuadros
+////////////////////// Funcion crear Formulario de ingreso de cuadros //////////////////
 
 const crearFormIngreso = () => {
     // Eliminar el formulario existente (si existe)
@@ -161,7 +159,7 @@ const crearFormIngreso = () => {
     });
   };
   
-
+////////////////////// Funcion para renderizar cuadros en DIV ////////////////////// 
 const verCuadros = () => {
     // Obtener el div de destino
     const divResultado = document.getElementById("divResultado");
