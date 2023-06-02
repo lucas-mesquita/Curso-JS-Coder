@@ -1,62 +1,24 @@
-// Definir constantes y variables globales
-const tienda = [
-  { id: 1, nombre: "Lienzo", tipo: "material", precio: 2000 },
-  { id: 2, nombre: "Vidrio", tipo: "material", precio: 2500 },
-  { id: 3, nombre: "Aluminio", tipo: "material", precio: 3000 },
-  { id: 4, nombre: "Cuadro 1", tipo: "cuadro", material: "Lienzo", categoria: "Historia", img: "src", precio: 2000, stock: 10 },
-  { id: 5, nombre: "Cuadro 2", tipo: "cuadro", material: "Lienzo", categoria: "Arte contemporaneo", img: "src", precio: 2500, stock: 5 },
-  { id: 6, nombre: "Cuadro 3", tipo: "cuadro", material: "Lienzo", categoria: "Artistas clasicos", img: "src", precio: 3000, stock: 8 },
-  { id: 7, nombre: "Cuadro 4", tipo: "cuadro", material: "Lienzo", categoria: "Abtracto", img: "src", precio: 2000, stock: 10 },
-  { id: 8, nombre: "Cuadro 5", tipo: "cuadro", material: "Lienzo", categoria: "Contemporaneo", img: "src", precio: 2500, stock: 5 },
-  { id: 9, nombre: "Cuadro 6", tipo: "cuadro", material: "Lienzo", categoria: "Monocromatico", img: "src", precio: 3000, stock: 8 },
-  { id: 10, nombre: "Cuadro 7", tipo: "cuadro", material: "Lienzo", categoria: "Abstracto", img: "src", precio: 2000, stock: 10 },
-  { id: 11, nombre: "Cuadro 8", tipo: "cuadro", material: "Lienzo", categoria: "Monocromatico", img: "src", precio: 2500, stock: 5 },
-  { id: 12, nombre: "Cuadro 9", tipo: "cuadro", material: "Lienzo", categoria: "Anime", img: "src", precio: 3000, stock: 8 }
-];
-// Funciones
+// Obtener el botón de ingresoCuadro
+let btnIngresoCuadro = document.getElementById("ingresoCuadro");
 
-const m2 = (ancho, alto, material, personalizado) => {
-  let precio = material.precio;
-  if (personalizado) {
-    precio += 1000; // agregar costo extra de diseño
-  }
-  return (ancho * alto * precio) / 10000;
-};
+// Agregar evento de click al botón
+btnIngresoCuadro.addEventListener("click", (e) => {
 
-const generarInfoPagos = (costo) => {
-  const contado = costo.toFixed(2);
-  const cuotas3 = (costo / 3).toFixed(2);
-  const cuotas6 = ((costo / 6) * 1.05).toFixed(2);
-  const cuotas12 = ((costo / 12) * 1.1).toFixed(2);
+  // Crear el formulario de ingreso llamando la funcion
+  crearFormIngreso();
+});
 
-  return `Puede realizar el pago de las siguientes maneras:
-Contado $${contado}
-En 3 cuotas de $${cuotas3}
-En 6 cuotas de $${cuotas6}
-En 12 cuotas de $${cuotas12}`;
-};
+// Obtener el botón de Ver Cuadros
+let btnVerCuadro = document.getElementById("verCuadro");
 
-// Función para validar un dato string
-const validarString = (valor) => {
-  return valor && typeof valor === 'string' && valor.trim() !== '';
-};
+// Agregar evento de click al botón
+btnVerCuadro.addEventListener("click", (e) => {
 
-// Función para validar un dato numérico
-const validarNumero = (valor) => {
-  return !isNaN(valor) && typeof valor === 'number' && isFinite(valor);
-};
+  // Crear el formulario de ingreso llamando la funcion
+  verCuadros();
+});
 
-// Solicitar información al usuario
-let nombre = prompt("Bienvenido al cotizador de cuadros. Por favor, ingrese su nombre:");
-let eleccion = parseInt(prompt(`Hola ${nombre}, ingresa un número correspondiente a las siguientes opciones:
-1- Ingresar un nuevo cuadro al stock.
-2- Realizar una cotización.`));
 
-while (eleccion !== 1 && eleccion !== 2) {
-  eleccion = parseInt(prompt(`Error, ingresa nuevamente un número correspondiente a una de las siguientes opciones:
-1- Ingresar un nuevo cuadro al stock.
-2- Realizar una cotización.`));
-}
 
 // Ingresar Cuadro
 if (eleccion === 1) {
@@ -138,7 +100,7 @@ if (eleccion === 1) {
     cuadroIngresado = true;
 
     // Mostrar información sobre el cuadro ingresado
-    const infoCuadro =`ID: ${nuevoCuadro.id}
+    const infoCuadro = `ID: ${nuevoCuadro.id}
      Nombre: ${nuevoCuadro.nombre}
      Tipo: ${nuevoCuadro.tipo}
      Material: ${nuevoCuadro.material}
