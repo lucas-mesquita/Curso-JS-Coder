@@ -1,21 +1,11 @@
-// Obtener el botón de ingresoCuadro
-let btnIngresoCuadro = document.getElementById("ingresoCuadro");
-// Agregar evento de click al botón
-btnIngresoCuadro.addEventListener("click", (e) => {
-  // Crear el formulario de ingreso llamando la funcion
-  crearFormIngreso();
-});
+// Crear el formulario de ingreso llamando la funcion
+crearFormIngreso();
 
-// Obtener el botón de Ver Cuadros
-let btnVerCuadro = document.getElementById("verCuadro");
-// Agregar evento de click al botón
-btnVerCuadro.addEventListener("click", (e) => {
-  // Crear el formulario de ingreso llamando la funcion
-  verCuadros();
-});
+// Crear el los cuadros dentro del div id="divMostrar"
+verCuadros();
 
 
-
+//////////////////////////////////////////////////////////////
 /* // Ingresar Cuadro
 if (eleccion === 1) {
   // Ingresar a stock
