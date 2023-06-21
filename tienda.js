@@ -14,4 +14,4 @@ const tienda = [
     { id: 12, nombre: "Cuadro 9", tipo: "cuadro", material: "Lienzo", categoria: "Anime", img: "https://s3-sa-east-1.amazonaws.com/centryproduction/belanit-inventario/products/61699d4ee8dab507affadc9e/image/61699d4ee8dab507affadc9e/original/open-uri20211015-1967-b6xuzh.", precio: 3000, stock: 8 }
   ];
 
- /*  localStorage.setItem("tienda", JSON.stringify(tienda)); */
+localStorage.setItem("tienda", JSON.stringify(tienda));
