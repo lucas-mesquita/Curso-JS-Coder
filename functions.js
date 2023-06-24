@@ -105,8 +105,6 @@ const crearFormIngreso = () => {
   // Asignar el evento click al botón de guardar
   botonGuardar.addEventListener("submit", (e) => {
     e.preventDefault();
-    
-    console.log(`dddddd${inputNombre.value}`);
 
     // Obtener los valores del formulario
     let nombre = inputNombre.value;
@@ -140,8 +138,77 @@ const crearFormIngreso = () => {
   });
 };
 
-////////////////////// Funcion para renderizar cuadros en un Section ////////////////////// 
 
+
+const traerCuadros = async () => {
+  try {
+    const response = await fetch("./tienda.json");
+    const data = await response.json();
+    
+    // Filtrar los tipos de cuadro para no mostrar los materiales
+    let cuadros = data.filter((objeto) => objeto.tipo === "cuadro");
+    console.log(cuadros);
+
+    // Crear una tarjeta para cada cuadro
+    cuadros.forEach((cuadro) => {
+      const card = document.createElement("div");
+      card.classList.add("col-auto");
+      card.classList.add("card");
+      card.style.width = "18rem";
+
+      // Verifica si la url se renderiza bien sino pone una por defecto
+      let img = cuadro.img ? `${cuadro.img}` : "https://cdn.memegenerator.es/descargar/18415767";
+
+      // Construir el contenido de la tarjeta
+      card.innerHTML = `<img src="${img}" alt="${cuadro.nombre}" class="card-img-top ">
+                        <div class="card-body">
+                          <h5 class="card-title">${cuadro.nombre}</h5>
+                          <p class="card-text">
+                            Material: ${cuadro.material}<br>
+                            Categoría: ${cuadro.categoria}<br>
+                            Precio: $${cuadro.precio}<br>
+                            Stock: ${cuadro.stock}
+                          </p>
+                          <div class="d-flex justify-content-center gap-1">
+                          <input type="number" id="cantidad${cuadro.id}" name="cantidad" min="1" max="${cuadro.stock}" value="1" style="width:3rem;">
+                          <a class="btn btn-primary" id="btnSeleccionar${cuadro.id}">Seleccionar</a>
+                          </div>
+                        </div>`;
+
+      // Agregar la tarjeta al div de resultado
+      divMostrar.appendChild(card);
+      // Agregar containerCards al cuerpo del documento
+      main.appendChild(containerCards);
+
+      /////////// Boton Seleccionar ////////////////////
+
+      let btnSeleccionar = document.getElementById(`btnSeleccionar${cuadro.id}`);
+
+      btnSeleccionar.addEventListener('click', () => {
+        let cantidad = document.getElementById(`cantidad${cuadro.id}`).value;
+        let textoCantidad = cantidad === '1' ? 'unidad' : 'unidades';
+
+        Toastify({
+          text: `Seleccionaste ${cantidad} ${textoCantidad} de ${cuadro.nombre}`,
+          duration: 2000,
+          gravity: 'bottom', // `top` or `bottom`
+          position: 'right', // `left`, `center` or `right`
+          style: {
+            background: 'linear-gradient(to right, #00b09b, #96c93d)',
+          },
+        }).showToast();
+
+        //EliminarStock();
+      });
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+////////////////////// Crear Section para los cuadros ////////////////////// 
 const verCuadros = () => {
   // Si está creado, lo reseteamos
   let existe = document.getElementById("containerCards");
@@ -164,66 +231,4 @@ const verCuadros = () => {
 
   // Agregar divMostrar al cuerpo de container
   containerCards.appendChild(divMostrar);
-
-  // Filtrar los tipos de cuadro para no mostrar los materiales
-  let cuadros = tiendaArr.filter((objeto) => objeto.tipo === "cuadro");
-  console.log(cuadros);
-
-  // Crear una tarjeta para cada cuadro
-  cuadros.forEach((cuadro) => {
-    const card = document.createElement("div");
-    card.classList.add("col-auto");
-    card.classList.add("card");
-    card.style.width = "18rem";
-
-    // Verifica si la url se renderiza bien sino pone un rectangulo gris
-    let img = cuadro.img ? `${cuadro.img}` : "https://cdn.memegenerator.es/descargar/18415767";
-
-    // Construir el contenido de la tarjeta
-    card.innerHTML = `<img src="${img}" alt="${cuadro.nombre}" class="card-img-top ">
-                        <div class="card-body">
-                          <h5 class="card-title">${cuadro.nombre}</h5>
-                          <p class="card-text">
-                            Material: ${cuadro.material}<br>
-                            Categoría: ${cuadro.categoria}<br>
-                            Precio: $${cuadro.precio}<br>
-                            Stock: ${cuadro.stock}
-                          </p>
-                          <div class="d-flex justify-content-center gap-1">
-                          <input type="number" id="cantidad${cuadro.id}" name="cantidad" min="1" max="${cuadro.stock}" value="1" style="width:3rem;">
-                          <a class="btn btn-primary" id="btnSeleccionar${cuadro.id}">Seleccionar</a>
-                          </div>
-                        </div>`;
-
-    // Agregar la tarjeta al div de resultado
-    divMostrar.appendChild(card);
-    // Agregar containerCards al cuerpo del documento
-    main.appendChild(containerCards);
-
-    /////////// Boton Seleccionar ////////////////////
-
-    let btnSeleccionar = document.getElementById(`btnSeleccionar${cuadro.id}`);
-
-    btnSeleccionar.addEventListener('click', () => {
-      let cantidad = document.getElementById(`cantidad${cuadro.id}`).value;
-      let textoCantidad = cantidad === '1' ? 'unidad' : 'unidades';
-
-      Toastify({
-        text: `Seleccionaste ${cantidad} ${textoCantidad} de ${cuadro.nombre}`,
-        duration: 2000,
-        gravity: 'bottom', // `top` or `bottom`
-        position: 'right', // `left`, `center` or `right`
-        style: {
-          background: 'linear-gradient(to right, #00b09b, #96c93d)',
-        },
-      }).showToast();
-
-      EliminarStock();
-    });
-  });
 };
-
-const EliminarStock = () => {
-
-}
-;
