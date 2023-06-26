@@ -1,152 +1,11 @@
-////////////////////// Funcion crear Formulario de ingreso de cuadros //////////////////
-
-const crearFormIngreso = () => {
-  // Crear el formulario
-  let formulario = document.createElement("form");
-  formulario.id = "formularioIngreso";
-  formulario.classList.add("m-auto");
-  formulario.classList.add("row");
-  formulario.classList.add("mb-3");
-  formulario.style.maxWidth = "500px";
-
-  // Crear el input de nombre
-  let labelNombre = document.createElement("label");
-  labelNombre.innerHTML = "Nombre:";
-  labelNombre.classList.add("form-label");
-  let inputNombre = document.createElement("input");
-  inputNombre.type = "text";
-  inputNombre.id = "nombre";
-  inputNombre.required = "true";
-  inputNombre.classList.add("form-control");
-  formulario.appendChild(labelNombre);
-  formulario.appendChild(inputNombre);
-
-  // Crear el select de material
-  let labelMaterial = document.createElement("label");
-  labelMaterial.innerHTML = "Material:";
-  labelMaterial.classList.add("form-label");
-  let selectMaterial = document.createElement("select");
-  selectMaterial.id = "material";
-  selectMaterial.classList.add("form-select");
-
-  // Obtener los materiales almacenados en el localStorage
-  let materiales = tiendaArr.filter((objeto) => objeto.tipo === "material");
-
-  // Crear las opciones del select con los materiales disponibles
-  materiales.forEach((material) => {
-    let opcion = document.createElement("option");
-    opcion.value = material.nombre;
-    opcion.text = material.nombre;
-    selectMaterial.appendChild(opcion);
-  });
-
-  formulario.appendChild(labelMaterial);
-  formulario.appendChild(selectMaterial);
-
-  // Crear el input de categoría
-  let labelCategoria = document.createElement("label");
-  labelCategoria.innerHTML = "Categoría:";
-  labelCategoria.classList.add("form-label");
-  let inputCategoria = document.createElement("input");
-  inputCategoria.type = "text";
-  inputCategoria.id = "categoria";
-  inputCategoria.required = "true";
-  inputCategoria.classList.add("form-control");
-  formulario.appendChild(labelCategoria);
-  formulario.appendChild(inputCategoria);
-
-  // Crear el input de ruta de imagen
-  let labelRutaImagen = document.createElement("label");
-  labelRutaImagen.innerHTML = "Ruta de imagen:";
-  labelRutaImagen.classList.add("form-label");
-  let inputRutaImagen = document.createElement("input");
-  inputRutaImagen.type = "text";
-  inputRutaImagen.id = "rutaImagen";
-  inputRutaImagen.required = "true";
-  inputRutaImagen.classList.add("form-control");
-  formulario.appendChild(labelRutaImagen);
-  formulario.appendChild(inputRutaImagen);
-
-  // Crear el input de precio
-  let labelPrecio = document.createElement("label");
-  labelPrecio.innerHTML = "Precio:";
-  labelPrecio.classList.add("form-label");
-  let inputPrecio = document.createElement("input");
-  inputPrecio.type = "number";
-  inputPrecio.id = "precio";
-  inputPrecio.required = "true";
-  inputPrecio.classList.add("form-control");
-  formulario.appendChild(labelPrecio);
-  formulario.appendChild(inputPrecio);
-
-  // Crear el input de stock
-  let labelStock = document.createElement("label");
-  labelStock.innerHTML = "Stock:";
-  labelStock.classList.add("form-label");
-  let inputStock = document.createElement("input");
-  inputStock.type = "number";
-  inputStock.id = "stock";
-  inputStock.required = "true";
-  inputStock.classList.add("form-control");
-  formulario.appendChild(labelStock);
-  formulario.appendChild(inputStock);
-
-  // Crear el botón de guardar
-  let botonGuardar = document.createElement("button");
-  botonGuardar.innerHTML = "Guardar";
-  botonGuardar.classList.add("btn");
-  botonGuardar.classList.add("btn-primary");
-  formulario.appendChild(document.createElement("hr"));
-  formulario.appendChild(botonGuardar);
-
-  // Agregar el formulario al cuerpo del documento
-  main.appendChild(formulario);
-
-  // Asignar el evento click al botón de guardar
-  botonGuardar.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    // Obtener los valores del formulario
-    let nombre = inputNombre.value;
-    let material = selectMaterial.value;
-    let categoria = inputCategoria.value;
-    let rutaImagen = inputRutaImagen.value;
-    let precio = inputPrecio.value;
-    let stock = inputStock.value;
-
-    // Crear un objeto con los datos del formulario
-    let objetoFormulario = {
-      id: tiendaArr.length + 1, // Obtener el ID como uno más que el último elemento en tiendaArr
-      nombre,
-      tipo: "cuadro",
-      material,
-      categoria,
-      img: rutaImagen,
-      precio,
-      stock
-    };
-
-    // Agregar el nuevo objeto al array de datos
-    tiendaArr.push(objetoFormulario);
-
-    // Guardar los datos en el localStorage
-    localStorage.setItem("tienda", JSON.stringify(tiendaArr));
-
-    // Refrescar el formulario
-    formulario.reset();
-    verCuadros();
-  });
-};
-
-
-
+// Función para mostrar los cuadros
 const traerCuadros = async () => {
   try {
     const response = await fetch("./tienda.json");
     const data = await response.json();
-    
+
     // Filtrar los tipos de cuadro para no mostrar los materiales
-    let cuadros = data.filter((objeto) => objeto.tipo === "cuadro");
+    cuadros = data.filter((objeto) => objeto.tipo === "cuadro");
     console.log(cuadros);
 
     // Crear una tarjeta para cada cuadro
@@ -156,7 +15,7 @@ const traerCuadros = async () => {
       card.classList.add("card");
       card.style.width = "18rem";
 
-      // Verifica si la url se renderiza bien sino pone una por defecto
+      // Verificar si la url se renderiza bien, sino utilizar una por defecto
       let img = cuadro.img ? `${cuadro.img}` : "https://cdn.memegenerator.es/descargar/18415767";
 
       // Construir el contenido de la tarjeta
@@ -171,34 +30,21 @@ const traerCuadros = async () => {
                           </p>
                           <div class="d-flex justify-content-center gap-1">
                           <input type="number" id="cantidad${cuadro.id}" name="cantidad" min="1" max="${cuadro.stock}" value="1" style="width:3rem;">
-                          <a class="btn btn-primary" id="btnSeleccionar${cuadro.id}">Seleccionar</a>
+                          <a class="btn btn-primary btnSeleccionar" data-id="${cuadro.id}">Seleccionar</a>
                           </div>
                         </div>`;
 
       // Agregar la tarjeta al div de resultado
       divMostrar.appendChild(card);
-      // Agregar containerCards al cuerpo del documento
-      main.appendChild(containerCards);
+    });
 
-      /////////// Boton Seleccionar ////////////////////
-
-      let btnSeleccionar = document.getElementById(`btnSeleccionar${cuadro.id}`);
-
-      btnSeleccionar.addEventListener('click', () => {
-        let cantidad = document.getElementById(`cantidad${cuadro.id}`).value;
-        let textoCantidad = cantidad === '1' ? 'unidad' : 'unidades';
-
-        Toastify({
-          text: `Seleccionaste ${cantidad} ${textoCantidad} de ${cuadro.nombre}`,
-          duration: 2000,
-          gravity: 'bottom', // `top` or `bottom`
-          position: 'right', // `left`, `center` or `right`
-          style: {
-            background: 'linear-gradient(to right, #00b09b, #96c93d)',
-          },
-        }).showToast();
-
-        //EliminarStock();
+    // Agregar el evento click para seleccionar cuadros
+    const btnSeleccionar = document.querySelectorAll('.btnSeleccionar');
+    btnSeleccionar.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt(e.target.dataset.id);
+        const cantidad = document.getElementById(`cantidad${id}`).value;
+        agregarSeleccion(id, cantidad);
       });
     });
 
@@ -207,28 +53,167 @@ const traerCuadros = async () => {
   }
 };
 
+// Función para agregar un cuadro a la selección
+const agregarSeleccion = (id, cantidad) => {
+  // Encontrar el cuadro seleccionado por su ID en el array de cuadros
+  const cuadroSeleccionado = cuadros.find((cuadro) => cuadro.id === id);
+  let textoCantidad = cantidad === '1' ? 'unidad' : 'unidades';
 
-////////////////////// Crear Section para los cuadros ////////////////////// 
-const verCuadros = () => {
-  // Si está creado, lo reseteamos
-  let existe = document.getElementById("containerCards");
-  if (existe) {
-    existe.remove();
+  if (cuadroSeleccionado) {
+    // Verificar si el cuadro ya está en el array 'seleccionados'
+    const existeSeleccion = seleccionados.some(
+      (seleccionado) => seleccionado.id === cuadroSeleccionado.id
+    );
+
+    if (!existeSeleccion) {
+      // Agregar el cuadro seleccionado al array 'seleccionados'
+      seleccionados.push(cuadroSeleccionado);
+
+      Toastify({
+        text: `Seleccionaste ${cantidad} ${textoCantidad} de ${cuadroSeleccionado.nombre}`,
+        duration: 2000,
+        gravity: 'bottom',
+        position: 'right',
+        style: {
+          background: 'linear-gradient(to right, #00b09b, #96c93d)',
+        },
+      }).showToast();
+
+      // Almacenar la selección en el Local Storage
+      localStorage.setItem('seleccionados', JSON.stringify(seleccionados));
+
+      // Renderizar la selección actualizada
+      renderizarSeleccion();
+    }
+  }
+};
+
+// Función para renderizar los elementos seleccionados
+const renderizarSeleccion = () => {
+  // Vaciar el contenido previo del elemento
+  seleccionMostrar.innerHTML = '';
+
+  // Verificar si hay elementos seleccionados
+  if (seleccionados.length === 0) {
+    seleccionMostrar.textContent = 'No hay elementos seleccionados.';
+    return;
   }
 
-  // Creamos el div Container
-  let containerCards = document.createElement("section");
-  containerCards.id = "containerCards";
-  containerCards.classList.add("container-fluid");
-  main.appendChild(containerCards);
+  // Recorrer los objetos seleccionados y crear elementos HTML para mostrarlos
+  seleccionados.forEach((cuadro) => {
+    const divCuadro = document.createElement('div');
+    divCuadro.classList.add('container');
+    divCuadro.innerHTML = `
+      <img src="${cuadro.img}" alt="${cuadro.nombre}" class="container">
+      <p>${cuadro.nombre} Seleccionado:${cantidad}</p>
+      <input type="number" id="eliminarCantidad${cuadro.id}" name="eliminarCantidad" min="1" max="${cantidad}" value="1" style="width:3rem;">
+      <button class="btn btn-primary btnEliminar" data-id="${cuadro.id}" class="btn btn-primary">Eliminar</button>
+      <hr>
+    `;
+    seleccionMostrar.appendChild(divCuadro);
+  });
 
-  // Creamos el divMostrar
-  let divMostrar = document.createElement("div");
-  divMostrar.id = "divMostrar";
-  divMostrar.classList.add("row");
-  divMostrar.classList.add("justify-content-center");
-  divMostrar.classList.add("gap-3");
+  // Agregar el botón para eliminar toda la selección
+  const btnEliminarTodo = document.createElement('button');
+  btnEliminarTodo.classList.add('btn');
+  btnEliminarTodo.classList.add('btn-primary');
+  btnEliminarTodo.textContent = 'Eliminar toda la selección';
+  seleccionMostrar.appendChild(btnEliminarTodo);
 
-  // Agregar divMostrar al cuerpo de container
-  containerCards.appendChild(divMostrar);
+  // Agregar el evento click para eliminar elementos individuales
+  const btnEliminarElemento = document.querySelectorAll('.btnEliminar');
+  btnEliminarElemento.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      const id = parseInt(e.target.dataset.id);
+      const cantidad = document.getElementById(`eliminarCantidad${id}`).value;
+      eliminarElementoSeleccionado(id, cantidad);
+    });
+  });
+
+  // Agregar el evento click para eliminar toda la selección
+  btnEliminarTodo.addEventListener('click', eliminarSeleccionCompleta);
+};
+
+// Función para eliminar un elemento seleccionado
+const eliminarElementoSeleccionado = (id, cantidad) => {
+  seleccionados = seleccionados.filter((cuadro) => cuadro.id !== id);
+
+  // Actualizar el Local Storage con la selección modificada
+  localStorage.setItem('seleccionados', JSON.stringify(seleccionados));
+
+  renderizarSeleccion();
+};
+
+// Función para eliminar toda la selección
+const eliminarSeleccionCompleta = () => {
+  seleccionados = [];
+
+  // Actualizar el Local Storage con la selección modificada
+  localStorage.setItem('seleccionados', JSON.stringify(seleccionados));
+
+  renderizarSeleccion();
+};
+
+// Función para cargar la selección almacenada en el Local Storage
+const cargarSeleccionDesdeLocalStorage = () => {
+  const seleccionGuardada = localStorage.getItem('seleccionados');
+  if (seleccionGuardada) {
+    seleccionados = JSON.parse(seleccionGuardada);
+  }
+};
+
+// Función para inicializar el formulario de ingreso
+const formIngreso = async () => {
+  try {
+    const response = await fetch("./tienda.json");
+    const data = await response.json();
+
+    // Filtrar los materiales
+    let materiales = data.filter((objeto) => objeto.tipo === "material");
+
+    // Crear las opciones del select con los materiales disponibles
+    materiales.forEach((material) => {
+      let opcion = document.createElement("option");
+      opcion.value = material.nombre;
+      opcion.text = material.nombre;
+      selectMaterial.appendChild(opcion);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Función para ingresar un cuadro
+const ingresarCuadro = () => {
+  botonGuardar.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Obtener los valores del formulario
+    let nombre = inputNombre.value;
+    let material = selectMaterial.value;
+    let categoria = inputCategoria.value;
+    let rutaImagen = inputRutaImagen.value;
+    let precio = inputPrecio.value;
+    let stock = inputStock.value;
+
+    // Crear un objeto con los datos del formulario
+    let objetoFormulario = {
+      id: cuadros.length + 1, // Obtener el ID como uno más que el último elemento en cuadros
+      nombre,
+      tipo: "cuadro",
+      material,
+      categoria,
+      img: rutaImagen,
+      precio,
+      stock
+    };
+
+    // Agregar el objeto al array de cuadros
+    cuadros.push(objetoFormulario);
+
+    // Actualizar el Local Storage con el nuevo cuadro
+    localStorage.setItem('cuadros', JSON.stringify(cuadros));
+
+    // Resetear el formulario
+    botonGuardar.reset();
+  });
 };
